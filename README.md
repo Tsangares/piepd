@@ -27,6 +27,19 @@ There are a few example displays that can be run through the cli,
 	epd.close()
 # Wiring
 
+| Board pin name | Board pin | RPi pin name | 
+|----------------|-----------|--------------|
+| VCC            | 2         | 3v3          | 
+| GND            | 6         | GND          | 
+| DIN            | 19        | GPIO10, MOSI | 
+| CLK            | 11        | GPIO11, SCKL | 
+| CS             | 24        | GPIO8, CE0   | 
+| DC             | 22        | GPIO25       | 
+| RST            | 11        | GPIO17       | 
+| BUSY           | 18        | GPIO24       | 
+
+
+
 | Name | Pin | GRPIO  | Description                         |
 |------|----------------------------------------------------|
 | VCC  | 2   | NA     | 3.3V                                |
