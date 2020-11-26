@@ -1,18 +1,17 @@
 #!/usr/bin/env
 #Change this to your display
-from waveshare_epd import epd1in54_V2
+from .waveshare_epd import epd1in54_V2
 from PIL import Image,ImageDraw,ImageFont
 import logging,time,qrcode
-from fonts import nova
+from .fonts import nova
 logging.basicConfig(level=logging.INFO)
 class EPD:
     def __init__(self,clear=True):
         self.epd = epd1in54_V2.EPD()
-        logging.info("init")
         self.epd.init()
         self.width = self.epd.width
         self.height = self.epd.height
-        logging.info("clear")
+        logging.info("Initalizing display and clearing.")
         self.clear()
         time.sleep(1)
         self.fontsize = 24
@@ -33,7 +32,11 @@ class EPD:
             offset[0] = int((self.width-img.size[0])/2)
         if centerY:
             offset[1] = int((self.height-img.size[1])/2)
-        image.paste(img,offset)
+        try:
+            image.paste(img,offset)
+        except Exception as e:
+            print(image.size,img.size.offest)
+            raise e
         image.rotate(angle)
         self.image = image
         self.covered = offset[1]+img.height
@@ -58,7 +61,7 @@ class EPD:
         qr = qrcode.QRCode(
             version=None,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=4,
+            box_size=3,
             border=1,
         )
         qr.add_data(text)
@@ -69,32 +72,53 @@ class EPD:
         epd1in54_V2.epdconfig.module_exit()
 
 
-def displayEscrow(args):
-    address = args.address
-    fee = args.fee
+def unoccupied(args=None,address=None,fee=None):
+    if args is not None:
+        address = args.address
+        fee=args.fee
+    elif address is None or fee is None:
+        raise Exception("Must give function address= and fee=")
     epd = EPD()
-    epd.setFontSize(24)
+    epd.setFontSize(21)
     epd.drawQR(address,draw=False)
     epd.drawText("Send me a",draw=False)
     epd.drawText(" refund address.",draw=False)
     epd.drawText("Fee: ",draw=False)
     epd.drawText(f"{fee} M\u03B9",right=True,overlap=True)
-    epd.close()
-        
-def displayCost(agrs):
-    address = args.address
-    fee = args.fee
-    deposit = args.collateral
+    
+def depositPage(args=None,address=None,fee=None,deposit=None,duration=120):
+    if args is not None:
+        address = args.address
+        fee = args.fee
+        deposit = args.collateral
+        duration = args.duration
+    elif address is None or fee is None:
+        raise Exception("Must give function address=, deposite= and fee=")
     epd = EPD()
     epd.setFontSize(24)
     epd.drawQR(address,draw=False)
     epd.drawText("Deposit:",draw=False)
     epd.drawText(f"{deposit} M\u03B9",draw=False,overlap=True,right=True)
     epd.drawText("Fee: ",draw=False)
-    epd.drawText(f"{fee} M\u03B9",right=True,overlap=True)
-    epd.close()
-
-def displayOccupied(args):
+    epd.drawText(f"{fee} M\u03B9",right=True,overlap=True,draw=False)
+    epd.drawText("Timeout: ",draw=False)
+    epd.drawText(f"{duration/60:.0f}min",right=True,overlap=True)
+    
+def failedDeposit(args=None):
+    epd = EPD()
+    epd.setFontSize(21)
+    epd.drawText("Failed deposit",draw=False)
+    
+def takeItem(args=None):
+    epd = EPD()
+    epd.setFontSize(21)
+    epd.drawText("Succesful deposit",draw=False)
+    epd.drawText("",draw=False)
+    epd.drawText("Please take your",draw=False)
+    epd.drawText(" tool from the",draw=False)
+    epd.drawText(" box",draw=True)
+    
+def occupied(args=None):
     epd = EPD()
     epd.setFontSize(21)
     epd.drawText("Tool is occupied",draw=False)
@@ -106,7 +130,6 @@ def displayOccupied(args):
     epd.drawText("",draw=False)
     epd.drawText("The RFID sensor",draw=False)
     epd.drawText(" must touch")
-    epd.close()
     
 if __name__=="__main__":
     #Cli support for the user display interface
@@ -121,16 +144,24 @@ if __name__=="__main__":
     create = subparsers.add_parser('create', help='Prompts to start an escrow.')  
     create.add_argument('address',type=str, help='Escrow address')
     create.add_argument('fee',type=int, help='Non-refundable cost of use.')
-    create.set_defaults(func=displayEscrow)
+    create.set_defaults(func=unoccupied)
 
     deposit = subparsers.add_parser('deposit', help='Prompts to deposit collateral.')
     deposit.add_argument('address',type=str, help='Escrow address')
     deposit.add_argument('fee',type=int, help='Non-refundable cost of use.')
     deposit.add_argument('collateral',type=int, help='Refundable deposit for security.')
-    deposit.set_defaults(func=displayCost)
+    deposit.add_argument('--duration',type=int, help='Timeout for deposit',default=120)
+    deposit.set_defaults(func=depositPage)
 
     occupied = subparsers.add_parser('occupied', help='Prompts the occupied tool prompt')
-    occupied.set_defaults(func=displayOccupied)
+    occupied.set_defaults(func=occupied)
+    
+    failed = subparsers.add_parser('failed', help='Prompts when a user failed deposit.')
+    failed.set_defaults(func=failedDeposit)
+
+    take = subparsers.add_parser('take', help='Prompts user instructions to take the item.')
+    take.set_defaults(func=takeItem)
+
 
     args = parser.parse_args()
     args.func(args)
