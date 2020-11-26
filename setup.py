@@ -4,7 +4,7 @@ long_description = open("README.md").read()
 
 setup(
         name='piepd',
-        version='0.0.1.9',
+        version='0.0.2.0',
         description='High level ePaper display utilty',
         long_description=long_description,
         long_description_content_type="text/markdown",
@@ -13,7 +13,6 @@ setup(
         include_package_data=True,
         packages=find_packages(),
         install_requires=[
-            'Pillow',
             'qrcode',
             ],
         entry_points={

@@ -2,6 +2,19 @@
 
 This is a high level e-paper libaray. It supports QR code displays and allows easy lines of text writing along with right text align. Ideally if used this libaray should be imported to use the helpful class `EPD`.
 
+**Note** This works for all waveshare screens when you import it. Simply change the line from,
+
+    from waveshare_epd import epd1in54_V2
+	
+To whatever screen you have. For instance the 5.83 inch BW screen
+
+    from waveshare_epd import epd5in83
+	
+Or the color version (bc)
+
+    from waveshare_epd import epd5in8bc
+	
+	
 # Installation
 
 Simply install this package from the pypi repo
@@ -11,6 +24,9 @@ Simply install this package from the pypi repo
 # Command Line Interface
 
 There are a few example displays that can be run through the cli,	
+
+	epd occipied #Displays text saying the tools is occupied
+	epd --help #To see altenative displays
 
 # Implementation Example
 
