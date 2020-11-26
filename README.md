@@ -37,17 +37,3 @@ There are a few example displays that can be run through the cli,
 | DC             | 22        | GPIO25       | 
 | RST            | 11        | GPIO17       | 
 | BUSY           | 18        | GPIO24       | 
-
-
-
-| Name | Pin | GRPIO  | Description                         |
-|------|----------------------------------------------------|
-| VCC  | 2   | NA     | 3.3V                                |
-| GND  | 6   | NA     | GND                                 |
-| DIN  | 19  | GPIO10 | SPI MOSI                            |
-| CLK  | 11  | GPIO11 | SPI SCK                             |
-| CS   | 24  | GPIO9  | SPI chip select (Low active)        |
-| DC   | 22  | GPIO25 | Data/Command control pin            |
-| RST  | 11  | GPIO17 | External reset pin (Low for reset)  |
-| BUSY | 18  | GPIO24 | Busy state output pin (Low for busy)|
-
