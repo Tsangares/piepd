@@ -4,7 +4,7 @@ long_description = open("README.md").read()
 
 setup(
         name='piepd',
-        version='0.0.1.4',
+        version='0.0.1.8',
         description='High level ePaper display utilty',
         long_description=long_description,
         long_description_content_type="text/markdown",
@@ -14,10 +14,11 @@ setup(
         packages=find_packages(),
         install_requires=[
             'Pillow',
+            'qrcode',
             ],
         entry_points={
             'console_scripts': [
-                'beep = src.epaper:main',
+                'epd = src.epd:main',
                 ]
             },
         classifiers=[
