@@ -4,8 +4,8 @@ long_description = open("README.md").read()
 
 setup(
         name='piepd',
-        version='0.0.1.2',
-        description='Buzzer utility for pi',
+        version='0.0.1.4',
+        description='High level ePaper display utilty',
         long_description=long_description,
         long_description_content_type="text/markdown",
         author_email='william.wyatt@cgu.edu',
@@ -17,7 +17,7 @@ setup(
             ],
         entry_points={
             'console_scripts': [
-                'beep = src.beep:main',
+                'beep = src.epaper:main',
                 ]
             },
         classifiers=[

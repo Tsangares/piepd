@@ -108,7 +108,7 @@ def displayOccupied(args):
     epd.drawText(" must touch")
     epd.close()
     
-if __name__=="__main__":
+def main():
     #Cli support for the user display interface
     #Supports three modes
     # - Initalize escrow screen
