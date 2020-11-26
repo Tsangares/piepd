@@ -33,7 +33,7 @@ There are a few example displays that can be run through the cli,
 
 | Board pin name | Board pin | RPi pin name | 
 |----------------|-----------|--------------|
-| VCC            | 2         | 3v3          | 
+| VCC            | 1         | 3v3          | 
 | GND            | 6         | GND          | 
 | DIN            | 19        | GPIO10, MOSI | 
 | CLK            | 11        | GPIO11, SCKL | 
