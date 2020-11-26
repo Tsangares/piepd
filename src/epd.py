@@ -131,7 +131,7 @@ def occupied(args=None):
     epd.drawText("The RFID sensor",draw=False)
     epd.drawText(" must touch")
     
-if __name__=="__main__":
+def main():
     #Cli support for the user display interface
     #Supports three modes
     # - Initalize escrow screen
