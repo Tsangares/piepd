@@ -4,7 +4,7 @@ long_description = open("README.md").read()
 
 setup(
         name='piepd',
-        version='0.0.1.8',
+        version='0.0.1.9',
         description='High level ePaper display utilty',
         long_description=long_description,
         long_description_content_type="text/markdown",
