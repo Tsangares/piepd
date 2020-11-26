@@ -1,3 +1,7 @@
+## Context
+
+This tool is showcased in the project [IotaWorkshop](https://github.com/Tsangares/iotaworkshop)
+
 # Summary
 
 This is a high level e-paper libaray. It supports QR code displays and allows easy lines of text writing along with right text align. Ideally if used this libaray should be imported to use the helpful class `EPD`.
