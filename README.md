@@ -8,6 +8,10 @@ This is a high level e-paper libaray. It supports QR code displays and allows ea
 
 # Installation
 
+This project depends on `Pillow` but there are a variety of ways of installing it so I did not mark it as a dependency in the pypi package, you can install it using,
+
+    pip install pillow
+   
 Simply install this package from the pypi repo
 
     pip install piepd
