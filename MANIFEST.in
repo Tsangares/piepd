@@ -1,0 +1,2 @@
+include *.ttf
+recursive-include piepd/fonts/nova *.ttf
